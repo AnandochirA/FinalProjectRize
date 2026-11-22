@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="logoTitle">
+  <title id="logoTitle">CampusHub logo</title>
+  <rect width="64" height="64" rx="14" fill="#ffb703"/>
+  <path d="M32 12 10 23v4h44v-4L32 12Z" fill="#1b2466"/>
+  <rect x="14" y="29" width="6" height="16" rx="1" fill="#1b2466"/>
+  <rect x="24" y="29" width="6" height="16" rx="1" fill="#1b2466"/>
+  <rect x="34" y="29" width="6" height="16" rx="1" fill="#1b2466"/>
+  <rect x="44" y="29" width="6" height="16" rx="1" fill="#1b2466"/>
+  <rect x="10" y="47" width="44" height="5" rx="1.5" fill="#1b2466"/>
+</svg>

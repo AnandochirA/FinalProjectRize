@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320">
+  <!-- Decorative illustration of a campus quad: sky, sun, library, clock tower, trees and students -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a4aa8"/>
+      <stop offset="1" stop-color="#6c7fd8"/>
+    </linearGradient>
+  </defs>
+  <rect width="480" height="320" rx="24" fill="url(#sky)"/>
+  <circle cx="392" cy="70" r="34" fill="#ffb703"/>
+  <ellipse cx="110" cy="70" rx="46" ry="14" fill="#ffffff" opacity=".55"/>
+  <ellipse cx="300" cy="46" rx="34" ry="10" fill="#ffffff" opacity=".4"/>
+  <!-- Ground -->
+  <path d="M0 250 Q240 215 480 250 V296 a24 24 0 0 1 -24 24 H24 A24 24 0 0 1 0 296Z" fill="#2f9e62"/>
+  <!-- Library -->
+  <path d="M120 150 240 105 360 150Z" fill="#fff4d6"/>
+  <rect x="130" y="150" width="220" height="90" fill="#fff4d6"/>
+  <rect x="130" y="150" width="220" height="10" fill="#e9d9ad"/>
+  <g fill="#c9b47c">
+    <rect x="148" y="165" width="14" height="68"/>
+    <rect x="182" y="165" width="14" height="68"/>
+    <rect x="216" y="165" width="14" height="68"/>
+    <rect x="250" y="165" width="14" height="68"/>
+    <rect x="284" y="165" width="14" height="68"/>
+    <rect x="318" y="165" width="14" height="68"/>
+  </g>
+  <rect x="226" y="196" width="28" height="44" rx="14" fill="#1b2466"/>
+  <!-- Clock tower -->
+  <rect x="58" y="110" width="40" height="135" fill="#fff4d6"/>
+  <path d="M52 112 78 76 104 112Z" fill="#9a3412"/>
+  <circle cx="78" cy="140" r="12" fill="#ffffff" stroke="#1b2466" stroke-width="3"/>
+  <path d="M78 132v8l6 4" stroke="#1b2466" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Trees -->
+  <rect x="392" y="200" width="8" height="40" fill="#6b3f1d"/>
+  <circle cx="396" cy="190" r="26" fill="#1f7a4a"/>
+  <rect x="428" y="212" width="7" height="30" fill="#6b3f1d"/>
+  <circle cx="431" cy="204" r="19" fill="#25915a"/>
+  <!-- Path -->
+  <path d="M226 320 L240 240 L254 240 L290 320Z" fill="#f1e3bd" opacity=".9"/>
+  <!-- Students -->
+  <g>
+    <circle cx="176" cy="252" r="7" fill="#f2c49b"/>
+    <rect x="169" y="260" width="14" height="24" rx="5" fill="#ffb703"/>
+    <rect x="182" y="262" width="7" height="11" rx="2" fill="#1b2466"/>
+  </g>
+  <g>
+    <circle cx="324" cy="256" r="7" fill="#8d5a3b"/>
+    <rect x="317" y="264" width="14" height="24" rx="5" fill="#9d174d"/>
+  </g>
+</svg>
