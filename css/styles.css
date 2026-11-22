@@ -1,0 +1,721 @@
+/* ==========================================================================
+   CampusHub — custom styles
+   --------------------------------------------------------------------------
+   Bootstrap 5 provides the grid, components and utilities. This file adds:
+   1. Brand design tokens (light + dark theme)
+   2. Accessibility helpers (skip link, focus rings, reduced motion)
+   3. Shared layout pieces (navbar, hero, cards, footer)
+   4. Feature-specific styles (calendar, dining, map, marketplace)
+   5. Responsive rules for tablet and mobile
+   ========================================================================== */
+
+/* ---------- 1. Design tokens ---------- */
+:root,
+[data-bs-theme="light"] {
+  --ch-brand: #27348b;
+  --ch-brand-dark: #1b2466;
+  --ch-brand-text: #27348b;      /* brand color used for text on page bg */
+  --ch-accent: #ffb703;
+  --ch-focus: #1b2466;
+  --ch-surface: #ffffff;
+  --ch-page-bg: #f4f5fb;
+  --ch-muted-surface: #eef0fa;
+  --ch-radius: 1rem;
+  --ch-shadow: 0 0.5rem 1.5rem rgba(20, 28, 80, 0.08);
+
+  /* Re-point Bootstrap's primary color at the brand color */
+  --bs-primary: #27348b;
+  --bs-primary-rgb: 39, 52, 139;
+  --bs-link-color: #27348b;
+  --bs-link-color-rgb: 39, 52, 139;
+  --bs-link-hover-color: #1b2466;
+  --bs-link-hover-color-rgb: 27, 36, 102;
+  --bs-body-bg: var(--ch-page-bg);
+}
+
+[data-bs-theme="dark"] {
+  --ch-brand-text: #b4bdff;
+  --ch-focus: #ffb703;
+  --ch-surface: #1c1f2e;
+  --ch-page-bg: #12141f;
+  --ch-muted-surface: #24283a;
+  --ch-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.35);
+
+  --bs-primary-rgb: 180, 189, 255;
+  --bs-link-color: #b4bdff;
+  --bs-link-color-rgb: 180, 189, 255;
+  --bs-link-hover-color: #d6dbff;
+  --bs-link-hover-color-rgb: 214, 219, 255;
+  --bs-body-bg: var(--ch-page-bg);
+  --bs-tertiary-bg: #24283a;
+}
+
+/* Category colors — every value passes WCAG AA (4.5:1) against white text */
+.cat-academic   { --cat-color: #1d4ed8; }
+.cat-social     { --cat-color: #9d174d; }
+.cat-sports     { --cat-color: #15803d; }
+.cat-career     { --cat-color: #9a3412; }
+.cat-arts       { --cat-color: #6d28d9; }
+.cat-wellness   { --cat-color: #0f766e; }
+.cat-holiday    { --cat-color: #475569; }
+.cat-dining     { --cat-color: #9a3412; }
+.cat-study      { --cat-color: #6d28d9; }
+.cat-services   { --cat-color: #0f766e; }
+.cat-recreation { --cat-color: #15803d; }
+.cat-housing    { --cat-color: #9d174d; }
+.cat-transport  { --cat-color: #475569; }
+
+/* ---------- 2. Base + accessibility ---------- */
+body {
+  background-color: var(--ch-page-bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+/* Visible keyboard focus everywhere (WCAG 2.4.7) */
+:focus-visible {
+  outline: 3px solid var(--ch-focus);
+  outline-offset: 2px;
+}
+
+.navbar :focus-visible,
+.hero :focus-visible,
+.site-footer :focus-visible {
+  outline-color: var(--ch-accent);
+}
+
+/* Bootstrap's focus glow is replaced by the outline above for consistency */
+.btn:focus-visible,
+.form-control:focus-visible,
+.form-select:focus-visible,
+.form-check-input:focus-visible {
+  box-shadow: none;
+}
+
+/* Skip link: hidden until focused, then pinned to the top-left corner */
+.skip-link:focus {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2000;
+  padding: 0.75rem 1rem;
+  background: var(--ch-accent);
+  color: #111;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  text-decoration: none;
+}
+
+.text-brand {
+  color: var(--ch-brand-text) !important;
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- 3. Shared layout ---------- */
+.bg-brand {
+  background-color: var(--ch-brand-dark) !important;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.navbar .nav-link {
+  border-radius: 0.5rem;
+  padding-inline: 0.75rem !important;
+}
+
+.navbar .nav-link.active,
+.navbar .nav-link[aria-current="page"] {
+  background-color: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+/* Brand primary buttons */
+.btn-primary {
+  --bs-btn-bg: var(--ch-brand);
+  --bs-btn-border-color: var(--ch-brand);
+  --bs-btn-hover-bg: var(--ch-brand-dark);
+  --bs-btn-hover-border-color: var(--ch-brand-dark);
+  --bs-btn-active-bg: var(--ch-brand-dark);
+  --bs-btn-active-border-color: var(--ch-brand-dark);
+  --bs-btn-disabled-bg: var(--ch-brand);
+  --bs-btn-disabled-border-color: var(--ch-brand);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--ch-brand-text);
+  --bs-btn-border-color: var(--ch-brand-text);
+  --bs-btn-hover-bg: var(--ch-brand);
+  --bs-btn-hover-border-color: var(--ch-brand);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-bg: var(--ch-brand);
+  --bs-btn-active-border-color: var(--ch-brand);
+  --bs-btn-active-color: #fff;
+}
+
+.btn-accent {
+  background-color: var(--ch-accent);
+  border-color: var(--ch-accent);
+  color: #111;
+  font-weight: 600;
+}
+
+.btn-accent:hover,
+.btn-accent:focus-visible {
+  background-color: #ffc933;
+  border-color: #ffc933;
+  color: #111;
+}
+
+/* Page header band used on every feature page */
+.page-header {
+  background: linear-gradient(135deg, var(--ch-brand-dark), var(--ch-brand));
+  color: #fff;
+  padding: 2.5rem 0 2rem;
+  margin-bottom: 2rem;
+}
+
+.page-header .lead {
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 46rem;
+}
+
+/* Home hero */
+.hero {
+  background: linear-gradient(135deg, var(--ch-brand-dark) 0%, var(--ch-brand) 70%, #3d4fb8 100%);
+  color: #fff;
+  padding: 3rem 0;
+  margin-bottom: 2rem;
+}
+
+.hero .lead {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-img {
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  filter: drop-shadow(0 1rem 2rem rgba(0, 0, 0, 0.25));
+}
+
+/* Cards */
+.ch-card {
+  background-color: var(--ch-surface);
+  border: 1px solid var(--bs-border-color-translucent);
+  border-radius: var(--ch-radius);
+  box-shadow: var(--ch-shadow);
+}
+
+.ch-card > .card-header {
+  background: transparent;
+  border-bottom: 1px solid var(--bs-border-color-translucent);
+  padding: 1rem 1.25rem;
+}
+
+.card-title-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.65rem;
+  background-color: var(--ch-muted-surface);
+  color: var(--ch-brand-text);
+  margin-right: 0.5rem;
+}
+
+/* Feature tiles on the home page */
+.feature-tile {
+  display: block;
+  height: 100%;
+  padding: 1.5rem;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.feature-tile:hover,
+.feature-tile:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 1rem 2rem rgba(20, 28, 80, 0.15);
+  color: inherit;
+}
+
+.feature-tile .feature-icon {
+  font-size: 1.75rem;
+  display: inline-grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 0.9rem;
+  background-color: var(--cat-color, var(--ch-brand));
+  color: #fff;
+  margin-bottom: 1rem;
+  align-self: flex-start; /* stop the flex column (.card) from stretching it */
+}
+
+.min-w-0 {
+  min-width: 0; /* lets long text wrap inside flex children */
+}
+
+.badge-cat {
+  background-color: var(--cat-color, #475569);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Footer */
+.site-footer {
+  background-color: var(--ch-brand-dark);
+  color: rgba(255, 255, 255, 0.9);
+  flex-shrink: 0;
+}
+
+.site-footer a {
+  color: #fff;
+}
+
+/* Loading skeleton shimmer used while API data loads */
+.skeleton {
+  display: block;
+  border-radius: 0.5rem;
+  background: linear-gradient(90deg, var(--ch-muted-surface) 25%, var(--bs-tertiary-bg) 50%, var(--ch-muted-surface) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite linear;
+  min-height: 1rem;
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* ---------- 4a. Dashboard ---------- */
+.weather-now {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.weather-now .weather-icon {
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--ch-brand-text);
+}
+
+.weather-now .temp {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.forecast-day {
+  text-align: center;
+  background-color: var(--ch-muted-surface);
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.25rem;
+  font-size: 0.875rem;
+}
+
+.forecast-day i {
+  font-size: 1.4rem;
+  color: var(--ch-brand-text);
+}
+
+/* ---------- 4b. Events calendar ---------- */
+.calendar-table {
+  table-layout: fixed;
+  width: 100%;
+  --bs-table-bg: transparent;
+}
+
+.calendar-table th {
+  text-align: center;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--bs-secondary-color);
+  border-bottom-width: 0;
+}
+
+.calendar-table th abbr {
+  text-decoration: none;
+}
+
+.calendar-table td {
+  padding: 0.2rem;
+  border: 0;
+}
+
+.calendar-day {
+  width: 100%;
+  min-height: 4.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--bs-border-color-translucent);
+  border-radius: 0.65rem;
+  background-color: var(--ch-surface);
+  color: inherit;
+  text-align: left;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+.calendar-day:hover {
+  border-color: var(--ch-brand-text);
+}
+
+.calendar-day.is-past {
+  color: var(--bs-secondary-color);
+}
+
+.calendar-day.is-today .day-num {
+  background-color: var(--ch-accent);
+  color: #111;
+  border-radius: 50%;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: inline-grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+.calendar-day[aria-pressed="true"] {
+  background-color: var(--ch-brand);
+  border-color: var(--ch-brand);
+  color: #fff;
+}
+
+.calendar-day .day-num {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.event-dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  align-items: center;
+  font-size: 0.7rem;
+}
+
+.event-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--cat-color);
+  box-shadow: 0 0 0 1px #fff;
+}
+
+.event-card {
+  border-left: 6px solid var(--cat-color) !important;
+}
+
+.event-date-badge {
+  flex: 0 0 auto;
+  width: 3.5rem;
+  text-align: center;
+  border-radius: 0.75rem;
+  background-color: var(--ch-muted-surface);
+  padding: 0.4rem 0;
+  line-height: 1.1;
+}
+
+.event-date-badge .month {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ch-brand-text);
+}
+
+.event-date-badge .day {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+/* ---------- 4c. Dining ---------- */
+.status-badge.open    { background-color: #15803d; color: #fff; }
+.status-badge.closing { background-color: #ffb703; color: #111; }
+.status-badge.closed  { background-color: #6b7280; color: #fff; }
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-list li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 0.5rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px dashed var(--bs-border-color);
+}
+
+.menu-list li:last-child {
+  border-bottom: 0;
+}
+
+.diet-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.15rem 0.5rem;
+  background-color: var(--ch-muted-surface);
+  color: var(--bs-body-color);
+  border: 1px solid var(--bs-border-color);
+}
+
+.hours-table tr.is-today {
+  font-weight: 700;
+}
+
+.hours-table tr.is-today td,
+.hours-table tr.is-today th {
+  background-color: var(--ch-muted-surface);
+}
+
+details > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--ch-brand-text);
+}
+
+.meal-card img {
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-top-left-radius: var(--ch-radius);
+  border-top-right-radius: var(--ch-radius);
+}
+
+.ingredient-list {
+  columns: 2;
+  column-gap: 1.5rem;
+}
+
+/* ---------- 4d. Campus map ---------- */
+#campusMap {
+  height: 70vh;
+  min-height: 440px;
+  border-radius: var(--ch-radius);
+  z-index: 0; /* keep Leaflet panes beneath the sticky navbar */
+}
+
+.building-list {
+  max-height: 52vh;
+  overflow-y: auto;
+}
+
+.building-list .list-group-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.building-list .list-group-item[aria-current="true"] {
+  background-color: var(--ch-muted-surface);
+  border-left: 4px solid var(--ch-brand-text);
+  font-weight: 600;
+}
+
+.cat-swatch {
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  display: inline-grid;
+  place-items: center;
+  background-color: var(--cat-color);
+  color: #fff;
+}
+
+/* Custom teardrop map pins built with L.divIcon */
+.map-pin {
+  width: 32px;
+  height: 32px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background-color: var(--cat-color);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  display: grid;
+  place-items: center;
+}
+
+.map-pin i {
+  transform: rotate(45deg);
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.leaflet-marker-icon:focus-visible .map-pin,
+.leaflet-marker-icon:focus-visible {
+  outline: 3px solid var(--ch-accent);
+  outline-offset: 2px;
+}
+
+.user-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #2563eb;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.3);
+}
+
+.leaflet-popup-content {
+  font-family: var(--bs-body-font-family);
+  font-size: 0.9rem;
+}
+
+/* ---------- 4e. Marketplace ---------- */
+.listing-card {
+  height: 100%;
+}
+
+.listing-card.is-sold {
+  opacity: 0.7;
+}
+
+.listing-card.is-sold .listing-title {
+  text-decoration: line-through;
+}
+
+.listing-price {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ch-brand-text);
+}
+
+.listing-desc {
+  white-space: pre-line;
+}
+
+@media (min-width: 992px) {
+  .sticky-lg-form {
+    position: sticky;
+    top: 5.5rem;
+  }
+}
+
+/* ---------- 5. Responsive rules ---------- */
+
+/* Tablet */
+@media (max-width: 991.98px) {
+  .hero {
+    text-align: center;
+    padding: 2.25rem 0;
+  }
+
+  .hero-img {
+    max-width: 320px;
+    margin-top: 1.5rem;
+  }
+
+  .building-list {
+    max-height: 18rem;
+  }
+
+  #campusMap {
+    height: 55vh;
+    min-height: 360px;
+  }
+}
+
+/* Phone */
+@media (max-width: 575.98px) {
+  .page-header {
+    padding: 1.75rem 0 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .page-header h1,
+  .hero h1 {
+    font-size: 1.85rem;
+  }
+
+  /* Compact calendar: number only, dots shrink */
+  .calendar-table td {
+    padding: 0.1rem;
+  }
+
+  .calendar-day {
+    min-height: 2.9rem;
+    padding: 0.25rem;
+    align-items: center;
+  }
+
+  .calendar-day .day-num {
+    font-size: 0.8rem;
+  }
+
+  .calendar-day.is-today .day-num {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .event-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .event-dots .more-count {
+    display: none;
+  }
+
+  .forecast-grid {
+    gap: 0.3rem;
+  }
+
+  .forecast-day {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.1rem;
+  }
+
+  .weather-now .temp {
+    font-size: 2.4rem;
+  }
+
+  .ingredient-list {
+    columns: 1;
+  }
+
+  #campusMap {
+    height: 50vh;
+    min-height: 300px;
+  }
+}
