@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Student Exchange: buy, sell, or trade textbooks, dorm furniture, electronics, tickets and tutoring with other students.">
+  <title>Student Exchange | CampusHub</title>
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script>
+    // Apply the saved (or system) color theme before the page paints to avoid a flash.
+    try {
+      const saved = JSON.parse(localStorage.getItem("campushub.theme"));
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.setAttribute("data-bs-theme", saved || (prefersDark ? "dark" : "light"));
+    } catch (e) { /* storage unavailable: keep light theme */ }
+  </script>
+</head>
+<body>
+  <a class="visually-hidden-focusable skip-link" href="#main">Skip to main content</a>
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-brand sticky-top" aria-label="Main navigation">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+          <img src="assets/img/logo.svg" alt="" width="34" height="34">
+          <span>CampusHub</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav ms-auto gap-lg-1">
+            <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door" aria-hidden="true"></i> Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="events.html"><i class="bi bi-calendar-event" aria-hidden="true"></i> Events</a></li>
+            <li class="nav-item"><a class="nav-link" href="dining.html"><i class="bi bi-cup-hot" aria-hidden="true"></i> Dining</a></li>
+            <li class="nav-item"><a class="nav-link" href="map.html"><i class="bi bi-map" aria-hidden="true"></i> Campus Map</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="marketplace.html"><i class="bi bi-shop" aria-hidden="true"></i> Exchange</a></li>
+          </ul>
+          <button id="themeToggle" class="btn btn-outline-light btn-sm ms-lg-3 my-2 my-lg-0" type="button" aria-pressed="false">
+            <i class="bi bi-moon-stars" aria-hidden="true"></i><span class="ms-1">Dark mode</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <div class="page-header">
+      <div class="container">
+        <h1 class="fw-bold"><i class="bi bi-shop" aria-hidden="true"></i> Student Exchange</h1>
+        <p class="lead mb-0">Buy, sell, or trade with other students — textbooks, dorm gear, tickets, and tutoring. Meet in a public campus spot and never pay in advance.</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row g-4">
+        <!-- Post a listing -->
+        <section class="col-lg-4" aria-labelledby="postHeading">
+          <div class="card ch-card sticky-lg-form">
+            <div class="card-body">
+              <h2 class="h5" id="postHeading"><i class="bi bi-plus-circle text-brand" aria-hidden="true"></i> Post a listing</h2>
+              <p class="small text-body-secondary">All fields are required unless marked optional. Listings are saved in this browser.</p>
+
+              <form id="listingForm" novalidate>
+                <div class="mb-3">
+                  <label for="lsTitle" class="form-label">What are you offering?</label>
+                  <input type="text" class="form-control" id="lsTitle" required minlength="3" maxlength="80"
+                         placeholder="e.g. Chemistry 101 textbook">
+                  <div class="invalid-feedback">Enter a title (at least 3 characters).</div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                  <div class="col-sm-6 col-lg-12 col-xl-6">
+                    <label for="lsCategory" class="form-label">Category</label>
+                    <select class="form-select" id="lsCategory" required>
+                      <option value="">Choose…</option>
+                    </select>
+                    <div class="invalid-feedback">Choose a category.</div>
+                  </div>
+                  <div class="col-sm-6 col-lg-12 col-xl-6">
+                    <label for="lsCondition" class="form-label">Condition</label>
+                    <select class="form-select" id="lsCondition" required>
+                      <option value="">Choose…</option>
+                      <option>New</option>
+                      <option>Like new</option>
+                      <option>Good</option>
+                      <option>Fair</option>
+                    </select>
+                    <div class="invalid-feedback">Choose a condition.</div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="lsPrice" class="form-label">Price (USD)</label>
+                  <div class="input-group has-validation">
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control" id="lsPrice" required min="0" max="5000" step="0.01"
+                           aria-describedby="priceHelp">
+                    <div class="invalid-feedback">Enter a price from $0 to $5,000.</div>
+                  </div>
+                  <div id="priceHelp" class="form-text">Enter 0 to give it away for free.</div>
+                </div>
+
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" id="lsTrade">
+                  <label class="form-check-label" for="lsTrade">Open to trades (optional)</label>
+                </div>
+
+                <div class="mb-3">
+                  <label for="lsDescription" class="form-label">Description</label>
+                  <textarea class="form-control" id="lsDescription" rows="3" required minlength="10" maxlength="400"
+                            aria-describedby="descCount"></textarea>
+                  <div class="invalid-feedback">Add a short description (10+ characters).</div>
+                  <div id="descCount" class="form-text text-end">0 / 400 characters</div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="lsContact" class="form-label">Contact email</label>
+                  <input type="email" class="form-control" id="lsContact" required placeholder="you@school.edu"
+                         autocomplete="email">
+                  <div class="invalid-feedback">Enter a valid email so buyers can reach you.</div>
+                </div>
+
+                <div class="d-flex gap-2">
+                  <button type="submit" class="btn btn-primary flex-grow-1"><i class="bi bi-send" aria-hidden="true"></i> Post listing</button>
+                  <button type="reset" class="btn btn-outline-secondary">Clear</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- Browse listings -->
+        <section class="col-lg-8" aria-labelledby="browseHeading">
+          <h2 class="h4" id="browseHeading" tabindex="-1">Browse listings</h2>
+          <form class="row g-2 align-items-end mb-3" id="listingFilters" role="search">
+            <div class="col-md-5">
+              <label for="lsSearch" class="form-label">Search</label>
+              <input type="search" class="form-control" id="lsSearch" placeholder="e.g. calculator, fridge">
+            </div>
+            <div class="col-6 col-md-3">
+              <label for="lsFilterCategory" class="form-label">Category</label>
+              <select class="form-select" id="lsFilterCategory">
+                <option value="all">All</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-4">
+              <label for="lsSort" class="form-label">Sort by</label>
+              <select class="form-select" id="lsSort">
+                <option value="newest">Newest first</option>
+                <option value="price-asc">Price: low to high</option>
+                <option value="price-desc">Price: high to low</option>
+              </select>
+            </div>
+            <div class="col-12 d-flex flex-wrap gap-3">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="lsShowSold">
+                <label class="form-check-label" for="lsShowSold">Show sold items</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="lsMineOnly">
+                <label class="form-check-label" for="lsMineOnly">Only my listings</label>
+              </div>
+            </div>
+          </form>
+
+          <p class="small text-body-secondary" id="listingCount" role="status"></p>
+          <div class="row g-3" id="listingGrid"><!-- rendered by marketplace.js --></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer mt-5 py-4">
+    <div class="container d-flex flex-column flex-md-row justify-content-between gap-2">
+      <p class="mb-0">&copy; <span id="year">2026</span> CampusHub · Built for students.</p>
+      <p class="mb-0 small">Stay safe: meet in public places like the Student Union.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/marketplace.js"></script>
+</body>
+</html>
